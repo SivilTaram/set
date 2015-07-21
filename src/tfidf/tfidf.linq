@@ -94,38 +94,45 @@ void Main()
 // Define other methods and classes here
 public static class Extension{
     public static List<Tuple<string,List<double>>> ToFDIDF(this Dictionary<string,List<string>> docs,int N,Func<int,int> tfFun,Func<int,int,double> idfFun){
-        // caculate term frequency
-        var tfs = 
-        docs.AsParallel()
-            .Select(d=>d.Value.GroupBy(w=>w).Select(g=>new {doc = d.Key,word = g.Key,value=tfFun(g.Count())}))
-            .Dump();
-         
-        // calculate invers documents frequency
-        var idfs = 
-        tfs.Aggregate((a,b)=>a.Union(b))
-           .GroupBy(a=>a.word)
-           .Select(g=> new {
-            word = g.Key,
-            value = idfFun(N,g.Count())
-           })
-           .Dump();
-           
-        // calculate td-idfs
-        var tfidfs = new List<Tuple<string,List<double>>>();
+        // count
+        var tfs = new Dictionary<string,Dictionary<string,int>>();
+        var idfs = new Dictionary<string,int>();
+        foreach(var doc in docs){
+            var tf = new Dictionary<string,int>(); 
+            foreach(var word in doc.Value){
+                if(tf.ContainsKey(word)){
+                    tf[word]++;
+                }else{
+                    idfs[word]=idfs.ContainsKey(word)?idfs[word]+1:1;
+                    tf[word]=1;                    
+                }
+            }
+            tfs[doc.Key]=tf;
+        }
+        
+        tfs.Dump();
+        idfs.Dump();
+        
+        // calculate
+        var tfidfs = new Dictionary<string,List<double>>();
         foreach(var tf in tfs){
             var tfidf = new List<double>();
-            var tfDict = tf.ToDictionary(t=>t.word,t=>t.value);
+            var tfDict = tf.Value;
             foreach(var idf in idfs){
-                if(tfDict.ContainsKey(idf.word)){
-                    tfidf.Add(tfDict[idf.word]*idf.value);
+                if(tfDict.ContainsKey(idf.Key)){
+                    var tfValue = tfFun(tfDict[idf.Key]);
+                    var idfValue = idfFun(N,idf.Value);
+                    var tfidfValue = tfValue*idfValue;
+                    tfidf.Add(tfidfValue);
                 }else{
                     tfidf.Add(0);
                 }
             }
-            tfidfs.Add(Tuple.Create(tf.First().doc,tfidf));
+            tfidfs.Add(tf.Key,tfidf);
         }
-        return tfidfs;
+        return tfidfs.Dump();
     }
+    
     public static double Cos(this List<double> V1, List<double> V2){
         int N = ((V2.Count < V1.Count)?V2.Count : V1.Count);
         double dot  = 0.0d;
