@@ -93,7 +93,7 @@ void Main()
 
 // Define other methods and classes here
 public static class Extension{
-    public static List<Tuple<string,List<double>>> ToFDIDF(this Dictionary<string,List<string>> docs,int N,Func<int,int> tfFun,Func<int,int,double> idfFun){
+    public static Dictionary<string,List<double>> ToFDIDF(this Dictionary<string,List<string>> docs,int N,Func<int,int> tfFun,Func<int,int,double> idfFun){
         // count
         var tfs = new Dictionary<string,Dictionary<string,int>>();
         var idfs = new Dictionary<string,int>();
@@ -143,13 +143,17 @@ public static class Extension{
             mag1 += Math.Pow(V1[n], 2);
             mag2 += Math.Pow(V2[n], 2);
         }
+        if(mag1==mag2&&mag1==0){
+            return 1;
+        }
         return dot / (Math.Sqrt(mag1) * Math.Sqrt(mag2));
     }
-    public static IEnumerable<Tuple<string,double>> Rank(this List<Tuple<string,List<double>>> list){
-        var item1 = list[0];
-        var query = list.Select(item=>Tuple.Create(item.Item1,item.Item2.Cos(item1.Item2))).OrderBy(v=>v.Item2);
-        foreach(var i in query){
-            yield return i;
+    public static Dictionary<string,double> Rank(this Dictionary<string,List<double>> dict){
+        var rank = new Dictionary<string,double>();
+        var first = dict.First();
+        foreach(var p in dict){
+            rank.Add(p.Key,p.Value.Cos(first.Value));
         }
+        return rank;
     }
 }
