@@ -119,7 +119,15 @@ namespace ExcelToolKit
 				if (record is XlsBiffEOF)
 					return -1;
 
-				record = m_stream.Read();
+                try
+                {
+                    record = m_stream.Read();
+                }
+                catch
+                {
+                    return -2;
+                }
+				
 			}
 
 			XlsBiffDbCell startCell = (XlsBiffDbCell)record;
@@ -493,7 +501,7 @@ namespace ExcelToolKit
 		}
 
 		//TODO: quite a bit of duplication with the noindex version
-		private void readWholeWorkSheetWithIndex(XlsBiffIndex idx, bool triggerCreateColumns, DataTable table)
+		private bool readWholeWorkSheetWithIndex(XlsBiffIndex idx, bool triggerCreateColumns, DataTable table)
 		{
 			m_dbCellAddrs = idx.DbCellAddresses;
 
@@ -503,8 +511,16 @@ namespace ExcelToolKit
 
 				// init reading data
 				m_cellOffset = findFirstDataCellOffset((int) m_dbCellAddrs[index]);
-				if (m_cellOffset < 0)
-					return;
+
+                if (m_cellOffset == -2)
+                {
+                    return false;
+                }
+
+                if (m_cellOffset < 0)
+                {
+                    return true;
+                }
 
 				//DataTable columns
 				if (triggerCreateColumns)
@@ -546,8 +562,9 @@ namespace ExcelToolKit
 				{
 					table.Rows.Add(m_cellsValues);
 				}
-					
 			}
+
+            return true;
 		}
 
 		private void readWholeWorkSheetNoIndex(bool triggerCreateColumns, DataTable table)

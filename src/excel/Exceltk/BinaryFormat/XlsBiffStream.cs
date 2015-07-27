@@ -109,7 +109,7 @@ namespace ExcelToolKit.BinaryFormat
 			//choose ReadOption.Loose to skip this check (e.g. sql reporting services)
 			if (reader.ReadOption == ReadOption.Strict)
 			{
-				if (m_offset + rec.Size > m_size)
+                if (offset + rec.Size > m_size)
 					return null;
 			}
 			
