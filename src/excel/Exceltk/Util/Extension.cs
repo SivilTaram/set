@@ -16,22 +16,22 @@ namespace ExcelToolKit
             public string Value { get; set; }
         }
 
-        public static MarkDownTable ToMd(this string xlsx, string sheet)
-        {
-            var ext = Path.GetExtension(xlsx);
-            return xlsx.XlsToMd(sheet);
-        }
-
-        public static IEnumerable<MarkDownTable> ToMd(this string xlsx)
-        {
-            var ext = Path.GetExtension(xlsx);
-            return xlsx.XlsToMd();
-        }
-
-        public static MarkDownTable XlsToMd(this string xls, string sheet)
+        public static MarkDownTable ToMd(this string xls, string sheet)
         {
             FileStream stream = File.Open(xls, FileMode.Open, FileAccess.Read);
-            IExcelDataReader excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
+            IExcelDataReader excelReader = null;
+            if (Path.GetExtension(xls) == ".xls")
+            {
+                excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
+            }
+            else if (Path.GetExtension(xls) == ".xlsx")
+            {
+                excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+            }
+            else
+            {
+                throw new ArgumentException("Not Support Format: ");
+            }
             DataSet dataSet = excelReader.AsDataSet();
             DataTable dataTable = dataSet.Tables[sheet];
 
@@ -46,7 +46,7 @@ namespace ExcelToolKit
             return table;
         }
 
-        public static IEnumerable<MarkDownTable> XlsToMd(this string xls)
+        public static IEnumerable<MarkDownTable> ToMd(this string xls)
         {
             FileStream stream = File.Open(xls, FileMode.Open, FileAccess.Read);
             IExcelDataReader excelReader = null;
