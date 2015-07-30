@@ -40,7 +40,6 @@ void Main(){
         
     // Plot Pie
         .Reset()
-        .Axis()
         .Pie("test",x,names,colors)
 		.Dump();
 }
