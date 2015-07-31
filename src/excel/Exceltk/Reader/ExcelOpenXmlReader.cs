@@ -506,7 +506,7 @@ namespace ExcelToolKit
                 //Console.WriteLine("Read Sheet Rows");
                 table.BeginLoadData();
                 var sheet = m_workbook.Sheets[sheetIndex];
-                Console.WriteLine("SheetIndex Is:{0},Name:{1}",sheetIndex,sheet.Name);
+                //Console.WriteLine("SheetIndex Is:{0},Name:{1}",sheetIndex,sheet.Name);
 				while (ReadSheetRow(sheet))
 				{
 					table.Rows.Add(m_cellsValues);

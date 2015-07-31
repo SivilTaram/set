@@ -16,6 +16,66 @@ namespace ExcelToolKit
             public string Value { get; set; }
         }
 
+        public static DataTable Shrink(this DataTable dataTable)
+        {
+            int columnCount = dataTable.Columns.Count;
+            int rowCount = dataTable.Rows.Count;
+            for (int r = rowCount-1; r >=0; r--)
+            {
+                for (int c = columnCount - 1; c >= 0; c--)
+                {
+                    var cell = dataTable.Rows[r][c];
+                    var value = "";
+                    var xlsCell = cell as XlsCell;
+                    if (cell is XlsCell)
+                    {
+                        value = xlsCell.Value.ToString();
+                    }
+                    else
+                    {
+                        value = cell.ToString();
+                    }
+                    if (value != null && !string.IsNullOrEmpty(value.Trim()))
+                    {
+                        goto CUT_COLUMN;
+                    }
+                }
+
+                dataTable.Rows.RemoveAt(r);
+            }
+
+            CUT_COLUMN:
+            columnCount = dataTable.Columns.Count;
+            rowCount = dataTable.Rows.Count;
+            for (int c = columnCount - 1; c >= 0; c--)
+            {
+                for (int r = rowCount - 1; r >= 0; r--)
+                {
+                    var cell = dataTable.Rows[r][c];
+                    var value = "";
+                    var xlsCell = cell as XlsCell;
+                    if (cell is XlsCell)
+                    {
+                        value = xlsCell.Value.ToString();
+                    }
+                    else
+                    {
+                        value = cell.ToString();
+                    }
+                    if (value != null && !string.IsNullOrEmpty(value.Trim()))
+                    {
+                        goto QUIT;
+                    }
+                }
+
+                dataTable.Columns.RemoveAt(c);
+            }
+
+            QUIT:
+
+            return dataTable;
+        }
+
         public static DataTable RemoveColumnsByRow(this DataTable dataTable, int rowIndex, Func<XlsCell, bool> filter)
         {
             if (rowIndex >= dataTable.Rows.Count)
@@ -143,6 +203,7 @@ namespace ExcelToolKit
 
         private static string ToMd(this DataTable table)
         {
+            table.Shrink();
             //table.RemoveColumnsByRow(0, string.IsNullOrEmpty);
             var sb = new StringBuilder();
 
