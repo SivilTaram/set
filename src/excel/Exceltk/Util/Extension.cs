@@ -18,7 +18,7 @@ namespace ExcelToolKit
 
         public static DataTable RemoveColumnsByRow(this DataTable dataTable,int rowIndex,Func<string,bool> filter)
         {
-            if (rowIndex > dataTable.Rows.Count)
+            if (rowIndex >= dataTable.Rows.Count)
             {
                 throw new ArgumentOutOfRangeException(string.Format("行下标超出范围，最大行数为： {0}", dataTable.Rows.Count));
             }
