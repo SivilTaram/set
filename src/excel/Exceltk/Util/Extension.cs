@@ -16,7 +16,7 @@ namespace ExcelToolKit
             public string Value { get; set; }
         }
 
-        public static DataTable RemoveColumnsByRow(this DataTable dataTable,int rowIndex,Func<string,bool> filter)
+        public static DataTable RemoveColumnsByRow(this DataTable dataTable, int rowIndex, Func<XlsCell, bool> filter)
         {
             if (rowIndex >= dataTable.Rows.Count)
             {
@@ -27,15 +27,15 @@ namespace ExcelToolKit
             var removeIndexs = new List<int>();
             foreach (var cell in row.ItemArray)
             {
-                string value = "";
+                XlsCell value=null;
                 XlsCell xlsCell = cell as XlsCell;
                 if (xlsCell != null)
                 {
-                    value = xlsCell.MarkDownText;
+                    value = xlsCell;
                 }
                 else
                 {
-                    value = cell.ToString();
+                    value = new XlsCell(cell);
                 }
 
                 if (filter(value))
@@ -63,7 +63,7 @@ namespace ExcelToolKit
                 XlsCell xlsCell = cell as XlsCell;
                 if (xlsCell != null)
                 {
-                    value = xlsCell.MarkDownText;
+                    value = xlsCell.Value.ToString();
                 }
                 else
                 {
