@@ -143,16 +143,16 @@ namespace ExcelToolKit
 
         private static string ToMd(this DataTable table)
         {
-            table.RemoveColumnsByRow(0, string.IsNullOrEmpty);
+            //table.RemoveColumnsByRow(0, string.IsNullOrEmpty);
             var sb = new StringBuilder();
 
             int i = 0;
             foreach (DataRow row in table.Rows)
             {
-                if (row.IsEmpty())
-                {
-                    continue;
-                }
+                //if (row.IsEmpty())
+                //{
+                //    continue;
+                //}
 
                 sb.Append("|");
                 foreach (var cell in row.ItemArray)
