@@ -16,7 +16,7 @@ namespace ExcelToolKit
             public string Value { get; set; }
         }
 
-        public static DataTable RemoveEmpryColumnsByRow(this DataTable dataTable,int rowIndex,Func<string,bool> filter)
+        public static DataTable RemoveColumnsByRow(this DataTable dataTable,int rowIndex,Func<string,bool> filter)
         {
             if (rowIndex > dataTable.Rows.Count)
             {
@@ -143,7 +143,7 @@ namespace ExcelToolKit
 
         private static string ToMd(this DataTable table)
         {
-            table.RemoveEmpryColumnsByRow(0, string.IsNullOrEmpty);
+            table.RemoveColumnsByRow(0, string.IsNullOrEmpty);
             var sb = new StringBuilder();
 
             int i = 0;
