@@ -85,7 +85,8 @@ namespace ExcelToolKit.OpenXmlFormat
 		/// <param name="val2">out val2.</param>
 		public static void XlsxDim(string value, out int val1, out int val2)
 		{//INFO: Check for a simple Solution
-			int index = 0;
+            value = value.Replace("$","");
+            int index = 0;
 			val1 = 0;
 			int[] arr = new int[value.Length - 1];
 

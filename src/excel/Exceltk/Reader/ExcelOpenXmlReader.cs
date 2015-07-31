@@ -180,6 +180,11 @@ namespace ExcelToolKit
 
 		private bool ReadSheetRow(XlsxWorksheet sheet)
 		{
+            if (sheet.ColumnsCount < 0)
+            {
+                //Console.WriteLine("Columons Count Can NOT BE Negative");
+                return false;
+            }
 			if (null == m_xmlReader) return false;
 
 			if (m_emptyRowCount != 0)
@@ -235,7 +240,10 @@ namespace ExcelToolKit
 
                 while (m_xmlReader.Read())
                 {
-                    if (m_xmlReader.Depth == 2) break;
+                    if (m_xmlReader.Depth == 2)
+                    {
+                        break;
+                    }
 
                     if (m_xmlReader.NodeType == XmlNodeType.Element)
                     {
@@ -252,9 +260,13 @@ namespace ExcelToolKit
                         {
                             hasValue = true;
                         }
+                        else
+                        {
+                            //Console.WriteLine("Error");
+                        }
                     }
 
-                    if (m_xmlReader.NodeType == XmlNodeType.Text && hasValue)
+                    if (m_xmlReader.NodeType == XmlNodeType.Text  && hasValue)
                     {
                         double number;
                         object o = m_xmlReader.Value;
@@ -294,7 +306,23 @@ namespace ExcelToolKit
 
                         if (col - 1 < m_cellsValues.Length)
                         {
+                            //Console.WriteLine(o);
+                            if (string.IsNullOrEmpty(o.ToString()))
+                            {
+                                //Console.WriteLine("Error");
+                            }
                             m_cellsValues[col - 1] = o;
+                        }
+                        else
+                        {
+                            //Console.WriteLine("Error");
+                        }
+                    }
+                    else
+                    {
+                        if (m_xmlReader.LocalName == XlsxWorksheet.N_v)
+                        {
+                            //Console.WriteLine("No Value");
                         }
                     }
                 }
@@ -477,7 +505,9 @@ namespace ExcelToolKit
                 // Read Sheet Rows
                 //Console.WriteLine("Read Sheet Rows");
                 table.BeginLoadData();
-				while (ReadSheetRow(m_workbook.Sheets[sheetIndex]))
+                var sheet = m_workbook.Sheets[sheetIndex];
+                Console.WriteLine("SheetIndex Is:{0},Name:{1}",sheetIndex,sheet.Name);
+				while (ReadSheetRow(sheet))
 				{
 					table.Rows.Add(m_cellsValues);
 				}

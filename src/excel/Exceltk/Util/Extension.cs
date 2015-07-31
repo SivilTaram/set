@@ -16,6 +16,69 @@ namespace ExcelToolKit
             public string Value { get; set; }
         }
 
+        public static DataTable RemoveEmpryColumnsByRow(this DataTable dataTable,int rowIndex,Func<string,bool> filter)
+        {
+            if (rowIndex > dataTable.Rows.Count)
+            {
+                throw new ArgumentOutOfRangeException(string.Format("行下标超出范围，最大行数为： {0}", dataTable.Rows.Count));
+            }
+            var row = dataTable.Rows[rowIndex];
+            int index = 0;
+            var removeIndexs = new List<int>();
+            foreach (var cell in row.ItemArray)
+            {
+                string value = "";
+                XlsCell xlsCell = cell as XlsCell;
+                if (xlsCell != null)
+                {
+                    value = xlsCell.MarkDownText;
+                }
+                else
+                {
+                    value = cell.ToString();
+                }
+
+                if (filter(value))
+                {
+                    removeIndexs.Add(index);
+                    
+                }
+
+                index++;
+            }
+
+            for (int i = removeIndexs.Count-1; i >= 0; i--)
+            {
+                dataTable.Columns.RemoveAt(removeIndexs[i]);
+            }
+
+            return dataTable;
+        }
+
+        public static bool IsEmpty(this DataRow row)
+        {
+            foreach (var cell in row.ItemArray)
+            {
+                string value = "";
+                XlsCell xlsCell = cell as XlsCell;
+                if (xlsCell != null)
+                {
+                    value = xlsCell.MarkDownText;
+                }
+                else
+                {
+                    value = cell.ToString();
+                }
+
+                if (value!=null&&!string.IsNullOrEmpty(value.Trim()))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
         public static MarkDownTable ToMd(this string xls, string sheet)
         {
             FileStream stream = File.Open(xls, FileMode.Open, FileAccess.Read);
@@ -80,11 +143,17 @@ namespace ExcelToolKit
 
         private static string ToMd(this DataTable table)
         {
+            table.RemoveEmpryColumnsByRow(0, string.IsNullOrEmpty);
             var sb = new StringBuilder();
 
             int i = 0;
             foreach (DataRow row in table.Rows)
             {
+                if (row.IsEmpty())
+                {
+                    continue;
+                }
+
                 sb.Append("|");
                 foreach (var cell in row.ItemArray)
                 {
