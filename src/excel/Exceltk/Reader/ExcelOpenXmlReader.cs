@@ -290,6 +290,10 @@ namespace ExcelToolKit
                         {
                             o = m_xmlReader.Value == "1";
                         }
+                        else if (a_t == "str")
+                        {
+                            o = m_xmlReader.Value.ToString();
+                        }
                         else if (null != a_s) //if something else
                         {
                             XlsxXf xf = m_workbook.Styles.CellXfs[int.Parse(a_s)];
