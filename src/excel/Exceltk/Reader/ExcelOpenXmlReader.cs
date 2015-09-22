@@ -365,6 +365,27 @@ namespace ExcelToolKit
                 return false;
             }
 
+            // Read Realtionship Table
+            //Console.WriteLine("sheetrel:{0}", sheet.Path);
+            var sheetRelStream = m_zipWorker.GetWorksheetRelsStream(sheet.Path);
+            var hyperDict = new Dictionary<string, string>();
+            if (sheetRelStream != null)
+            {
+                using (var reader = XmlReader.Create(sheetRelStream))
+                {
+                    while (reader.Read())
+                    {
+                        if (reader.NodeType == XmlNodeType.Element && reader.LocalName == XlsxWorkbook.N_rel)
+                        {
+                            string rid = reader.GetAttribute(XlsxWorkbook.A_id);
+                            hyperDict[rid] = reader.GetAttribute(XlsxWorkbook.A_target);
+                        }
+                    }
+                    sheetRelStream.Close();
+                }
+            }
+            
+
             // Read All HyperLink Node
             while (m_xmlReader.Read())
             {
@@ -372,7 +393,15 @@ namespace ExcelToolKit
                 if (m_xmlReader.LocalName != XlsxWorksheet.N_hyperlink) break;
                 string aref = m_xmlReader.GetAttribute(XlsxWorksheet.A_ref);
                 string display = m_xmlReader.GetAttribute(XlsxWorksheet.A_display);
+                string rid = m_xmlReader.GetAttribute(XlsxWorksheet.A_rid);
                 ////Console.WriteLine("{0}:{1}", aref.Substring(1), display);
+
+                //Console.WriteLine("hyperlink:{0}",hyperDict[rid]);
+                var hyperlink = display;
+                if (hyperDict.ContainsKey(rid))
+                {
+                    hyperlink = hyperDict[rid];
+                }
 
                 int col = -1;
                 int row = -1;
@@ -387,14 +416,14 @@ namespace ExcelToolKit
                         // TODO(fanfeilong):
                         var value = table.Columns[col].ColumnName;
                         XlsCell cell = new XlsCell(value);
-                        cell.SetHyperLink(display);
+                        cell.SetHyperLink(hyperlink);
                         table.Columns[col].DefaultValue = cell;
                     }
                     else
                     {
                         var value = table.Rows[row][col];
                         var cell = new XlsCell(value);
-                        cell.SetHyperLink(display);
+                        cell.SetHyperLink(hyperlink);
                         //Console.WriteLine(cell.MarkDownText);
                         table.Rows[row][col] = cell;
                     }

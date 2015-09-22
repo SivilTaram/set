@@ -64,6 +64,8 @@ namespace ExcelToolKit
                 Console.WriteLine();
                 Console.WriteLine("Usecase:exceltk -t md -xls xlsfile [-sheet sheetname]");
             }
+
+            //Console.Read();
         }
 	}
 }

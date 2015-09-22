@@ -164,6 +164,17 @@ namespace ExcelToolKit
             return GetStream(Path.Combine(_xlPath, sheetPath));
         }
 
+        public Stream GetWorksheetRelsStream(string sheetPath)
+        {
+            if (sheetPath.StartsWith("/xl/"))
+                sheetPath = sheetPath.Substring(4);
+            sheetPath = Path.Combine(_xlPath, sheetPath);
+
+            var sheetDirName = Path.GetDirectoryName(sheetPath);
+            var relsFileName = Path.GetFileName(sheetPath) + ".rels";
+            var relsPath = string.Format("{0}/_rels/{1}",sheetDirName,relsFileName);
+            return GetStream(relsPath);
+        }
 
 		/// <summary>
 		/// Gets the workbook rels stream.

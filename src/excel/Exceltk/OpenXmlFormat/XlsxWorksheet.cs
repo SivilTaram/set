@@ -19,6 +19,7 @@ namespace ExcelToolKit.OpenXmlFormat
 		public const string A_t          = "t";
 		public const string A_s          = "s";
 		public const string A_display    = "display";
+        public const string A_rid = "r:id";
 		public const string N_sheetData  = "sheetData";
 		public const string N_inlineStr  = "inlineStr";
 		public const string N_hyperlinks = "hyperlinks";

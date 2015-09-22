@@ -9,19 +9,17 @@ namespace ExcelToolKit.OpenXmlFormat
 {
     internal class XlsxWorkbook
     {
-        private const string N_sheet = "sheet";
-        private const string N_t = "t";
-        private const string N_si = "si";
-        private const string N_cellXfs = "cellXfs";
-        private const string N_numFmts = "numFmts";
-
-        private const string A_sheetId = "sheetId";
-        private const string A_name = "name";
-        private const string A_rid = "r:id";
-
-        private const string N_rel = "Relationship";
-        private const string A_id = "Id";
-        private const string A_target = "Target";
+        public const string N_sheet = "sheet";
+        public const string N_t = "t";
+        public const string N_si = "si";
+        public const string N_cellXfs = "cellXfs";
+        public const string N_numFmts = "numFmts";
+        public const string A_sheetId = "sheetId";
+        public const string A_name = "name";
+        public const string A_rid = "r:id";
+        public const string N_rel = "Relationship";
+        public const string A_id = "Id";
+        public const string A_target = "Target";
 
         private XlsxWorkbook() { }
 
