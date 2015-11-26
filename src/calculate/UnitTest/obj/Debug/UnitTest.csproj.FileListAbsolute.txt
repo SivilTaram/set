@@ -1,0 +1,7 @@
+D:\dev\code_git_me\set\src\calculate\UnitTest\bin\Debug\UnitTest.dll
+D:\dev\code_git_me\set\src\calculate\UnitTest\bin\Debug\UnitTest.pdb
+D:\dev\code_git_me\set\src\calculate\UnitTest\bin\Debug\calculate.exe
+D:\dev\code_git_me\set\src\calculate\UnitTest\bin\Debug\calculate.pdb
+D:\dev\code_git_me\set\src\calculate\UnitTest\obj\Debug\UnitTest.csprojResolveAssemblyReference.cache
+D:\dev\code_git_me\set\src\calculate\UnitTest\obj\Debug\UnitTest.dll
+D:\dev\code_git_me\set\src\calculate\UnitTest\obj\Debug\UnitTest.pdb

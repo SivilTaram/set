@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="eabd5e82-21cc-4192-96d9-f3104c1ec6cf" name="ffl@FANFEILONG 2015-11-13 14:54:35" runUser="FANFEILONG\ffl" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="6181a450-e234-4004-aad3-b5b99147c6ba">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="ffl_FANFEILONG 2015-11-13 14_54_35">
+      <DeploymentItem filename="D:\dev\code_git_me\set\src\calculate\calculate\bin\Debug\calculate.exe" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2015-11-13T14:54:35.8476450+08:00" queuing="2015-11-13T14:54:36.9182384+08:00" start="2015-11-13T14:54:37.0108905+08:00" finish="2015-11-13T14:54:37.9515890+08:00" />
+  <ResultSummary outcome="Completed">
+    <Counters total="1" executed="1" passed="1" error="0" failed="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="ExecuteTest" storage="d:\dev\code_git_me\set\src\calculate\unittest\bin\debug\unittest.dll" id="2b39a67c-b910-a8eb-fcbc-8778d068cbbc">
+      <Execution id="5d35dd0f-e61f-4324-9e4c-6e531d2d3f98" />
+      <TestMethod codeBase="D:/dev/code_git_me/set/src/calculate/UnitTest/bin/Debug/UnitTest.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnitTest.CalculateTest, UnitTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="ExecuteTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="2b39a67c-b910-a8eb-fcbc-8778d068cbbc" executionId="5d35dd0f-e61f-4324-9e4c-6e531d2d3f98" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="5d35dd0f-e61f-4324-9e4c-6e531d2d3f98" testId="2b39a67c-b910-a8eb-fcbc-8778d068cbbc" testName="ExecuteTest" computerName="FANFEILONG" duration="00:00:00.0123873" startTime="2015-11-13T14:54:37.1189657+08:00" endTime="2015-11-13T14:54:37.9195788+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5d35dd0f-e61f-4324-9e4c-6e531d2d3f98">
+    </UnitTestResult>
+  </Results>
+</TestRun>
