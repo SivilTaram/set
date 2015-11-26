@@ -86,6 +86,11 @@ namespace ExcelToolKit.OpenXmlFormat
 		public static void XlsxDim(string value, out int val1, out int val2)
 		{//INFO: Check for a simple Solution
             value = value.Replace("$","");
+            if (value.Contains(":"))
+            {
+                value = value.Substring(0, value.IndexOf(":"));
+            }
+
             int index = 0;
 			val1 = 0;
 			int[] arr = new int[value.Length - 1];
