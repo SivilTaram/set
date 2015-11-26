@@ -1,8 +1,10 @@
 # set
 `set` means `software engineering tools`
 
-# tables
-- [x] [Personal Software Process(PSP)](https://github.com/fanfeilong/set/blob/master/doc/SE_PSP.xlsx)
+# Tables
+- [x] Personal Software Process
+    - [SE_PSP.xlsx](https://github.com/fanfeilong/set/blob/master/doc/SE_PSP.xlsx)
+	- [SE_PSP.md](https://github.com/fanfeilong/set/blob/master/doc/SE_PSP.md)
 - [x] [SE Mid-Term Survey](https://github.com/fanfeilong/set/blob/master/doc/SE_Mid_Survey.docx)
 - [x] [SE Final Skill Survey](https://github.com/fanfeilong/set/blob/master/doc/SE_Final_Skill_survey.xlsx)
 
@@ -17,6 +19,8 @@
         - `exceltk.exe -t md -xls example.xls -sheet sheetname`
         - `exceltk.exe -t md -xls example.xlsx` 
         - `exceltk.exe -t md -xls example.xlsx -sheet sheetname`
+	- Download:
+		- [exceltk0.0.3 debug version](http://fanfeilong.github.io/exceltk0.0.3.7z)
 - [x] gui for exceltk. see: [exceltk gui](https://github.com/fanfeilong/set/tree/master/src/excel/ExceltkGUI)
 
 # C# Linq Scripts For Auto Process
