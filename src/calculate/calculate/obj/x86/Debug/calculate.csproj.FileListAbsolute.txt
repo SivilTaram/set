@@ -1,5 +1,0 @@
-D:\dev\code_git_me\set\src\calculate\calculate\bin\Debug\calculate.exe.config
-D:\dev\code_git_me\set\src\calculate\calculate\bin\Debug\calculate.exe
-D:\dev\code_git_me\set\src\calculate\calculate\bin\Debug\calculate.pdb
-D:\dev\code_git_me\set\src\calculate\calculate\obj\x86\Debug\calculate.exe
-D:\dev\code_git_me\set\src\calculate\calculate\obj\x86\Debug\calculate.pdb
